@@ -1,14 +1,7 @@
-
 {
     "version": 2,
     "installCommand": "npm install",
     "outputDirectory": ".vercel/output",
-    "builds": [
-      {
-        "src": "app.js",
-        "use": "@vercel/node"
-      }
-    ],
     "functions": {
         "api/*.js": {
             "memory": 1024,
