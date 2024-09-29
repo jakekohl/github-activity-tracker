@@ -2,7 +2,7 @@
 const Routes = require('./routes');
 const Hapi = require('@hapi/hapi');
 
-const init = async () => {
+async function init() {
 
     const server = Hapi({
         port: 3000,
@@ -12,6 +12,7 @@ const init = async () => {
     // Route registration
     const routes = Routes;
     Object.keys(routes).forEach((key) => {
+        console.info(`Loading: ${key}`)
         routes[key].register(server);
     });
 
@@ -24,4 +25,9 @@ process.on('unhandledRejection', (err) => {
     process.exit(1);
 });
 
-init();
+/**
+ * Start the Server
+ */
+(async () => {
+    await init();
+  })();
