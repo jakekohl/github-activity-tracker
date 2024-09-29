@@ -10,7 +10,6 @@
   "scripts": {
     "dev": "node app",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "vercel build && npm run dev",
     "lint": "eslint"
   },
   "repository": {
