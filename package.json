@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "node app",
     "build": "npm install",
-    "deploy": "npm i && node app",
+    "deploy": "npm build && run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint"
   },
