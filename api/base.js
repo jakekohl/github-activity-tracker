@@ -3,7 +3,7 @@ module.export.routes = {
         server.route({
             method: 'GET',
             path: '/',
-            return: (request, h) => {
+            return: (req, h) => {
                 "Hello world!"
             }
         });

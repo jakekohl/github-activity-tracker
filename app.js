@@ -1,5 +1,5 @@
 'use strict';
-const Routes = require('./routes');
+const Routes = require('./api');
 const Hapi = require('@hapi/hapi');
 
 async function init() {
