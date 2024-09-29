@@ -1,10 +1,10 @@
 'use strict';
-import Routes from './routes';
-import { server as _server } from '@hapi/hapi';
+const Routes = require('./routes');
+const Hapi = require('@hapi/hapi');
 
 const init = async () => {
 
-    const server = _server({
+    const server = Hapi({
         port: 3000,
         host: 'localhost'
     });

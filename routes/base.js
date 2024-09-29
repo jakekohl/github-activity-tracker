@@ -1,6 +1,6 @@
 
 
-export const routes = {
+module.export.routes = {
     register: (server) => {
         server.route({
             method: 'GET',
