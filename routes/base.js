@@ -1,5 +1,3 @@
-
-
 module.export.routes = {
     register: (server) => {
         server.route({
@@ -7,8 +5,7 @@ module.export.routes = {
             path: '/',
             return: (request, h) => {
                 "Hello world!"
-            },
-            validotors
+            }
         });
     },
 };
