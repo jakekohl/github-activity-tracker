@@ -8,8 +8,7 @@
   },
   "scripts": {
     "dev": "node app",
-    "build": "npm install",
-    "deploy": "npm build && run dev",
+    "build": "vercel build && node app",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint"
   },
