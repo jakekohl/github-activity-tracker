@@ -1,0 +1,42 @@
+{
+  "name": "github-activity-tracker",
+  "version": "0.0.1",
+  "description": "personal project to grab aggregate github activity history for an account",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "dev": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "",
+    "vercel-build": "",
+    "lint": "eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakekohl/github-activity-tracker.git"
+  },
+  "keywords": [
+    "github",
+    "activity",
+    "aggregater",
+    "project"
+  ],
+  "author": "Jake Kohl",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jakekohl/github-activity-tracker/issues"
+  },
+  "homepage": "https://github.com/jakekohl/github-activity-tracker#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.11.1",
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.30.0",
+    "globals": "^15.9.0"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.10"
+  }
+}
