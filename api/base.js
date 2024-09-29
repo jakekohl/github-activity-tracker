@@ -4,6 +4,7 @@ module.export.routes = {
             method: 'GET',
             path: '/',
             return: (req, h) => {
+                console.info('Someone was able to find me!')
                 "Hello world!"
             }
         });

@@ -8,5 +8,11 @@
             "maxDuration": 10
         }
     },
+    "redirects": [
+        {
+          "source": "/(.*)",
+          "destination": "/api/base"
+        }
+    ],
     "cleanUrls": true
   }
