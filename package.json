@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "personal project to grab aggregate github activity history for an account",
   "main": "app.js",
+  "types": "module",
   "directories": {
     "lib": "lib"
   },
