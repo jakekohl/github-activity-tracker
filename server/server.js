@@ -1,38 +1,47 @@
-const { createAuth0Client } = require('@auth0/auth0-spa-js');
-const express = require("express");
-const fs = require('fs');
-const path = require('path');
+'use strict';
 
-// Create an express application
-const app = express();
+const Hapi = require('@hapi/hapi');
+const dotenv = require('dotenv');
+const routes = require('./routes');
+const mongodb = require('mongodb');
 
-// Get all files in the middleware directory
-const middlewarePath = path.join(__dirname, 'middleware');
-const middlewareFiles = fs.readdirSync(middlewarePath);
-middlewareFiles.forEach((file) => {
-    const middleware = require(path.join(middlewarePath, file));
-    app.use(middleware);
+dotenv.config();
+
+// Hapi Server Options
+const serverOptions = {
+      "port": process.env.PORT || 3000,
+      "host": process.env.HOST || "localhost",
+  };
+
+// Database Options
+const dbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ENDPOINT}` || 'mongodb://localhost:27017';
+
+
+
+// Start the server
+const init = async () => {
+
+    console.info(`Starting server at ${new Date()}`);
+    const server = Hapi.server(serverOptions);
+    
+    console.debug(dbUrl);
+
+    // Establish connection to the database
+    console.info(`Connecting to database ${process.env.MONGO_DB_NAME} at ${process.env.MONGO_DB_ENDPOINT}`);
+    const client = new mongodb.MongoClient(dbUrl);
+
+    // Register routes
+    console.info('Registering routes');
+    await server.register(routes);
+    await server.start();
+    console.log(`Server running on ${server.info.uri}`);
+};
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+
+    console.log(err);
+    process.exit(1);
 });
 
-// Get all files in the routes directory
-const routesPath = path.join(__dirname, 'routes');
-const routeFiles = fs.readdirSync(routesPath);
-const routes = {};
-routeFiles.forEach((file) => {
-    const routeName = path.basename(file, '.js');
-    const routePath = path.join(routesPath, file);
-    routes[routeName] = require(routePath);
-    app.use(routes[routeName]);
-    console.log(`Routes for "${routeName}" loaded.`);
-});
-
-app._router.stack.forEach(function(r){
-    if (r.route && r.route.path){
-      console.log(`Path: ${r.route.path}, Methods: ${Object.keys(r.route.methods)}`);
-    }
-  });
-
-  console.log(app._router.stack);
-
-// Listen on port 3000
-app.listen(3000, () => console.log("Application running on port 3000"));
+init();

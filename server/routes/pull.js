@@ -1,5 +1,4 @@
-const express = require('express');
-const router = express.Router();
+
 
 // const the api path to use
 const api_path = `${process.env.api_base}/pull`;
