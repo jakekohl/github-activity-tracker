@@ -11,10 +11,10 @@ const healthHandler = (request, h) => {
   };
 };
 
-const routes = {
+const healthRoutes = {
   method: 'GET',
   path: healthUrl,
   handler: healthHandler
 };
 
-export { routes };
+export default { healthRoutes };

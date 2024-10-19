@@ -1,10 +1,12 @@
 import Hapi from '@hapi/hapi';
 import HapiMongo from 'hapi-mongodb';
-import './routes/index.js';
+import HapiAlive from 'hapi-alive';
+//import routesPlugin from './routes/index.js';
 
 // Hapi server options and monogodb connection options
 import { serverOptions } from './config/server.js';
-import { dbUrl, databaseOptions } from './config/database.js';
+const dbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ENDPOINT}` || 'mongodb://localhost:27017';
+
 
 'use strict';
 
@@ -36,15 +38,22 @@ const init = async () => {
         process.exit(1); // Kill the process
     };
 
+    // Register routes
     console.info('Registering routes');
-    try {
-        // Register the routes
-        await server.register(routesPlugin);
-        console.info('Routes registered');
-    } catch (error) {
-        console.error('Failed to register routes:', error);
-        process.exit(1); // Kill the process
-    }
+    await server.register({
+        plugin: HapiAlive,
+        options: {
+            path: '/ping', 
+            tags: ['health', 'monitor'],
+            ping: async function(server) {
+              return { 
+                ok,
+                time: new Date()
+             };
+            }
+        }
+    });
+    //await server.register(routesPlugin);
 
     // Finally, start the server
     await server.start().then(() => {

@@ -6,7 +6,7 @@ async function getSingleUserHandler() {
     return 'user';
 }
 
-const routes = [
+const userRoutes = [
     {
         method: 'GET',
         path: '/api/users',
@@ -19,4 +19,4 @@ const routes = [
     }
 ];
   
-export { routes };
+export default { userRoutes };

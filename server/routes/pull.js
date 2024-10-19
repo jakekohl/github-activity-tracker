@@ -6,7 +6,7 @@ export async function pull() {
     return('pull');
 };
 
-const routes = [
+const pullRoutes = [
     {
         method: 'GET',
         path: '/pull',
@@ -23,4 +23,4 @@ const routes = [
     }
 ];
 
-export { routes };
+export default { pullRoutes };
