@@ -1,45 +1,59 @@
+import Hapi from '@hapi/hapi';
+import HapiMongo from 'hapi-mongodb';
+import './routes/index.js';
+
+// Hapi server options and monogodb connection options
+import { serverOptions } from './config/server.js';
+import { dbUrl, databaseOptions } from './config/database.js';
+
 'use strict';
-
-const Hapi = require('@hapi/hapi');
-const dotenv = require('dotenv');
-const routes = require('./routes');
-const mongodb = require('mongodb');
-
-dotenv.config();
-
-// Hapi Server Options
-const serverOptions = {
-      "port": process.env.PORT || 3000,
-      "host": process.env.HOST || "localhost",
-  };
-
-// Database Options
-const dbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ENDPOINT}` || 'mongodb://localhost:27017';
-
-
 
 // Start the server
 const init = async () => {
-
     console.info(`Starting server at ${new Date()}`);
     const server = Hapi.server(serverOptions);
-    
-    console.debug(dbUrl);
 
     // Establish connection to the database
     console.info(`Connecting to database ${process.env.MONGO_DB_NAME} at ${process.env.MONGO_DB_ENDPOINT}`);
-    const client = new mongodb.MongoClient(dbUrl);
+    console.debug(`Database URL: ${dbUrl}`);
 
-    // Register routes
+    try {
+        await server.register({
+            plugin: HapiMongo,
+            options: {
+                url: dbUrl,
+                settings: { 
+                    readPreference: 'secondary',
+                    retryWrites: true,
+                    w: 'majority' 
+                },
+                decorate: true
+            }
+        });
+        console.info('Connected to the database!');
+    } catch (error) {
+        console.error('Failed to connect to the database:', error);
+        process.exit(1); // Kill the process
+    };
+
     console.info('Registering routes');
-    await server.register(routes);
-    await server.start();
-    console.log(`Server running on ${server.info.uri}`);
+    try {
+        // Register the routes
+        await server.register(routesPlugin);
+        console.info('Routes registered');
+    } catch (error) {
+        console.error('Failed to register routes:', error);
+        process.exit(1); // Kill the process
+    }
+
+    // Finally, start the server
+    await server.start().then(() => {
+        console.log(`Server running on ${server.info.uri}`);
+    });
 };
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-
     console.log(err);
     process.exit(1);
 });
