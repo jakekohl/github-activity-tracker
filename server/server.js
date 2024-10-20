@@ -1,7 +1,6 @@
 import Hapi from '@hapi/hapi';
 import HapiMongo from 'hapi-mongodb';
-import HapiAlive from 'hapi-alive';
-//import routesPlugin from './routes/index.js';
+import routesPlugin from './routes/index.js';
 
 // Hapi server options and monogodb connection options
 import { serverOptions } from './config/server.js';
@@ -40,20 +39,12 @@ const init = async () => {
 
     // Register routes
     console.info('Registering routes');
+    console.debug('Routes:', JSON.stringify(routesPlugin));
     await server.register({
-        plugin: HapiAlive,
-        options: {
-            path: '/ping', 
-            tags: ['health', 'monitor'],
-            ping: async function(server) {
-              return { 
-                ok,
-                time: new Date()
-             };
-            }
-        }
+      plugin: routesPlugin,
+      options: {}
     });
-    //await server.register(routesPlugin);
+
 
     // Finally, start the server
     await server.start().then(() => {

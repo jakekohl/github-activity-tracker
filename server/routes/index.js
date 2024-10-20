@@ -1,17 +1,14 @@
-import healthRoutes from './health.js';
-//import pingRoutes from './ping.js';
-import pullRoutes from './pull.js';
-import userRoutes from './user.js';
+import { userGetRoutes, userPostRoutes } from './user.js';
 
 const routesPlugin = {
     name: 'api-routes',
-    version: '1.0.0',
     register: async function (server, options) {
-        server.route(healthRoutes);
-        //server.route(pingRoutes);
-        server.route(pullRoutes);
-        server.route(userRoutes);
+        console.info('Registering user routes');
+        console.debug('Routes:', JSON.stringify(userGetRoutes));
+        server.route(userGetRoutes);
+        console.debug('Routes:', JSON.stringify(userPostRoutes));
+        server.route(userPostRoutes);
     }
 };
 
-export default { routesPlugin };
+export default routesPlugin;

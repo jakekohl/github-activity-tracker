@@ -1,4 +1,4 @@
-import { Auth0 } from '@auth0/auth0-spa-js';
+
 
 class User {
     constructor(name, email, auth0) {
@@ -16,5 +16,5 @@ class User {
     }
 }
 
-module.exports = User;
+export default { User };
 

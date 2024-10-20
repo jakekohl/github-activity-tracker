@@ -1,0 +1,12 @@
+{
+  "databases": [
+    { 
+      "name": "user",
+      "collections": [
+        {
+          "name": "users"
+        }
+      ]
+    }
+  ]
+}
