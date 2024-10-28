@@ -4,6 +4,7 @@ import routesPlugin from './routes/index.js';
 
 // Hapi server options and monogodb connection options
 import { serverOptions } from './config/server.js';
+const nodeEnv = process.env.NODE_ENV || 'development';
 const dbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB_PASSWORD}@${process.env.MONGO_DB_ENDPOINT}` || 'mongodb://localhost:27017';
 
 
@@ -13,7 +14,7 @@ const dbUrl = `mongodb+srv://${process.env.MONGO_DB_USER}:${process.env.MONGO_DB
 const init = async () => {
     console.info(`Starting server at ${new Date()}`);
     const server = Hapi.server(serverOptions);
-
+/*
     // Establish connection to the database
     console.info(`Connecting to database ${process.env.MONGO_DB_NAME} at ${process.env.MONGO_DB_ENDPOINT}`);
     console.debug(`Database URL: ${dbUrl}`);
@@ -36,7 +37,7 @@ const init = async () => {
         console.error('Failed to connect to the database:', error);
         process.exit(1); // Kill the process
     };
-
+*/
     // Register routes
     console.info('Registering routes');
     console.debug('Routes:', JSON.stringify(routesPlugin));

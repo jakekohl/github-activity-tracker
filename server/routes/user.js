@@ -44,34 +44,43 @@ async function createUsersHandler(request, h) {
  * @returns {object} that contains results of the batch create users operation
  */
 async function updateUserHandler(request, h) {
+  
   return 'user';
 };
 
-
-
-export const userGetRoutes = [
+const userGetRoutes = [
   {
     method: 'GET',
     path: `${apiBase}/users`,
-    handler: await getMultipleUsersHandler()
+    handler: async (request, h) => {
+      return await getMultipleUsersHandler(request, h);
+    }
   },
   {
     method: 'GET',
     path: `${apiBase}/users/{id}`,
-    handler: await getSingleUserHandler()
+    handler: async (request, h) => {
+      return await getSingleUserHandler(request, h);
+    }
   },
-  
 ];
 
-export const userPostRoutes = [
+
+const userPostRoutes = [
   {
     method: ['POST', 'PUT'],
     path: `${apiBase}/users`,
-    handler: await createUsersHandler()
+    handler: async (request, h) => {
+      await createUsersHandler(request, h)
+    }
   },
   {
     method: ['POST', 'PUT'],
     path: `${apiBase}/users/{id}`,
-    handler: await updateUserHandler()
-},
-]
+    handler: async (request, h) => {
+      await updateUserHandler(request, h)
+    }
+  },
+];
+
+export { userGetRoutes, userPostRoutes };
