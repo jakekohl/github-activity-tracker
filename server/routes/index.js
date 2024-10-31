@@ -1,4 +1,5 @@
 import { userGetRoutes, userPostRoutes } from './user.js';
+import { pullRoutes } from './pull.js';
 
 const routesPlugin = {
     name: 'api-routes',
@@ -8,7 +9,10 @@ const routesPlugin = {
         server.route(userGetRoutes);
         console.debug('Routes:', JSON.stringify(userPostRoutes));
         server.route(userPostRoutes);
-    }
+        console.info('Registering pull routes');
+        console.debug('Routes:', JSON.stringify(pullRoutes));
+        server.route(pullRoutes);
+    },
 };
 
 export default routesPlugin;

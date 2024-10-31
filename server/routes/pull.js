@@ -1,26 +1,25 @@
-export async function getLastPull() {
-    return('last pull');
-};
+import { getUserContributions } from '../lib/github.js';
 
-export async function pull() {
-    return('pull');
+const apiBase = process.env.API_BASE;
+
+async function pullGitHubActivityHandler() {
+    const username = 'jakekohl';
+    const startDate = new Date('2001-01-01T00:00:00Z').toISOString();
+    const endDate = new Date().toISOString();
+    console.debug(`Pulling GitHub activity for user ${username} from ${startDate} to ${endDate}`);
+    const contributions = await getUserContributions(username, startDate, endDate);
+    if (contributions?.error && contributions.error) { return contributions?.error; };
+    return contributions;
 };
 
 const pullRoutes = [
     {
         method: 'GET',
-        path: '/pull',
+        path: `${apiBase}/pull`,
         handler: async (request, h) => {
-            await getLastPull();
-        }
+            return await pullGitHubActivityHandler();
+        },
     },
-    {
-        method: 'POST',
-        path: '/pull',
-        handler: async (request, h) => {
-            await pull();
-        }
-    }
 ];
 
-export default { pullRoutes };
+export { pullRoutes };

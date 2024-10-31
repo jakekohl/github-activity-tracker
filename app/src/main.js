@@ -21,9 +21,3 @@ createAuth0({
 })
 
 app.mount('#app');
-
-/*
-const port = process.env.APP_PORT; // Set the port to a static value, e.g., 3000
-
-app.mount('#app', { port: port }) // Mount the app with the specified port
-*/
